@@ -47,6 +47,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void pullTimerStart();
 
+	UFUNCTION(BlueprintCallable)
+		bool GetPlayerAlive();
+
 	UFUNCTION()
 		void PullTimer();
 
@@ -66,6 +69,10 @@ protected:
 	UPROPERTY(EditAnywhere)
 	int32 m_PullLossAmount;
 
+	bool m_playerAlive;
+
 	// if the player can move 	
 	bool m_CanMove;
+
+
 };
