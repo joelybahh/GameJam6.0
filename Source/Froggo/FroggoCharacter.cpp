@@ -39,6 +39,8 @@ AFroggoCharacter::AFroggoCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	m_CanMove = true;
 }
 
 void AFroggoCharacter::addPullForce(int32 force)
@@ -50,6 +52,8 @@ void AFroggoCharacter::pullTimerStart()
 {
 	// make sure pull force is more than zero
 	m_pullForce = 0;
+	// stop the player from moving
+	m_CanMove = false;
 
 	FTimerDelegate TimerDel;
 	TimerDel.BindUFunction(this, FName("PullTimer"));
@@ -68,6 +72,7 @@ void AFroggoCharacter::PullTimer()
 		// clear timer function
 		UE_LOG(LogTemp, Warning, TEXT("YOU BROKE FREE!"));
 		GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
+		m_CanMove = true;
 		return;
 	}
 
@@ -86,8 +91,6 @@ void AFroggoCharacter::PullTimer()
 void AFroggoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AFroggoCharacter::MoveRight);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AFroggoCharacter::TouchStarted);
@@ -96,18 +99,22 @@ void AFroggoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 
 void AFroggoCharacter::MoveRight(float Value)
 {
-	// add movement in that direction
-	AddMovementInput(FVector(0.f,-1.f,0.f), Value);
+	if (m_CanMove)
+	{
+		// add movement in that direction
+		AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
+	}
+
 }
 
 void AFroggoCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
 	// jump on any touch
-	Jump();
+	//Jump();
 }
 
 void AFroggoCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
-	StopJumping();
+	//StopJumping();
 }
 

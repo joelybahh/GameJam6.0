@@ -66,4 +66,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	int32 m_PullLossAmount;
 
+	// if the player can move 	
+	bool m_CanMove;
 };
