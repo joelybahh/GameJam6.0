@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{DDC24972-42EC-2355-3F8F-B9811552A785}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Froggo",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
