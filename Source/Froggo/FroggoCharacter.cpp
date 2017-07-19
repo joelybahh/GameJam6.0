@@ -41,6 +41,7 @@ AFroggoCharacter::AFroggoCharacter()
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	m_CanMove = true;
+	m_playerAlive = true;
 }
 
 void AFroggoCharacter::addPullForce(int32 force)
@@ -50,8 +51,8 @@ void AFroggoCharacter::addPullForce(int32 force)
 
 void AFroggoCharacter::pullTimerStart()
 {
-	// make sure pull force is more than zero
-	m_pullForce = 0;
+	// make sure pull force is how much needed to kill player
+	m_pullForce = m_PullLossAmount;
 	// stop the player from moving
 	m_CanMove = false;
 
@@ -62,6 +63,11 @@ void AFroggoCharacter::pullTimerStart()
 		TimerDel, m_MaxPullTime, true);
 	UE_LOG(LogTemp, Warning, TEXT("Started"));
 
+}
+
+bool AFroggoCharacter::GetPlayerAlive()
+{
+	return m_playerAlive;
 }
 
 void AFroggoCharacter::PullTimer()
@@ -81,6 +87,7 @@ void AFroggoCharacter::PullTimer()
 		// player didn't break free
 		UE_LOG(LogTemp, Warning, TEXT("YOU LOST!"));
 		GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
+		m_playerAlive = false;
 		return;
 	}
 }
@@ -104,7 +111,6 @@ void AFroggoCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
 	}
-
 }
 
 void AFroggoCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
