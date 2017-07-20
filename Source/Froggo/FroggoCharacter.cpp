@@ -72,22 +72,23 @@ bool AFroggoCharacter::GetPlayerAlive()
 
 void AFroggoCharacter::PullTimer()
 {
-	if (m_pullForce <= 0 )
-	{
-		// player broke free
-		// clear timer function
-		UE_LOG(LogTemp, Warning, TEXT("YOU BROKE FREE!"));
-		GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
-		m_CanMove = true;
-		return;
-	}
-
 	if (m_pullForce >= m_PullLossAmount)
 	{
 		// player didn't break free
 		UE_LOG(LogTemp, Warning, TEXT("YOU LOST!"));
 		GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
 		m_playerAlive = false;
+		return;
+	}
+
+	if (m_pullForce <= 0)
+	{
+		// player broke free
+		// clear timer function
+		UE_LOG(LogTemp, Warning, TEXT("YOU BROKE FREE!"));
+		GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
+		m_CanMove = true;
+		m_PullLossAmount -= m_PullLossDecrement;
 		return;
 	}
 }

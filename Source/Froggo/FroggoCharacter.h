@@ -40,6 +40,7 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
+
 	// add pull force to player
 	UFUNCTION(BlueprintCallable)
 	void addPullForce(int32 force);
@@ -68,6 +69,10 @@ protected:
 	// the amount of pull needed to kill player
 	UPROPERTY(EditAnywhere)
 	int32 m_PullLossAmount;
+
+	// how much the pull decrements each time
+	UPROPERTY(EditAnywhere)
+		int32 m_PullLossDecrement;
 
 	bool m_playerAlive;
 
