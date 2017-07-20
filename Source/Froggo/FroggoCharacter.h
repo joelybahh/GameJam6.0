@@ -49,6 +49,9 @@ public:
 		void pullTimerStart();
 
 	UFUNCTION(BlueprintCallable)
+		void pullTimerEnd();
+
+	UFUNCTION(BlueprintCallable)
 		bool GetPlayerAlive();
 
 	UFUNCTION(BlueprintCallable)
@@ -74,9 +77,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	int32 m_PullLossAmount;
 
-	// how much the pull decrements each time
+	// how much to decrease time each time the player breaks free
 	UPROPERTY(EditAnywhere)
-		int32 m_PullLossDecrement = 5;
+		int32 m_TimeLoss;
 
 	bool m_playerAlive;
 

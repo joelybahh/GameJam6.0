@@ -56,14 +56,18 @@ void AFroggoCharacter::pullTimerStart()
 	// stop the player from movin	g
 	m_CanMove = false;
 
-	m_PullLossAmount -= m_PullLossDecrement;
-
 	FTimerDelegate TimerDel;
 	TimerDel.BindUFunction(this, FName("PullTimer"));
 
 	GetWorld()->GetTimerManager().SetTimer(m_PullTimerHandle,
 		TimerDel, m_MaxPullTime, true);
 
+}
+
+void AFroggoCharacter::pullTimerEnd()
+{
+	GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
+	m_CanMove = true;
 }
 
 bool AFroggoCharacter::GetPlayerAlive()
@@ -78,7 +82,7 @@ FTimerHandle AFroggoCharacter::GetPullTimerHandle()
 
 void AFroggoCharacter::PullTimer()
 {
-	if (m_PullLossAmount < 0)
+	if (m_pullForce > 0)
 	{
 		// player didn't break free
 		UE_LOG(LogTemp, Warning, TEXT("YOU LOST!"));
@@ -87,15 +91,14 @@ void AFroggoCharacter::PullTimer()
 		return;
 	}
 
-	if (m_pullForce <= 0)
-	{
-		// player broke free
-		// clear timer function
-		m_CanMove = true;
-		UE_LOG(LogTemp, Warning, TEXT("YOU BROKE FREE!"));
-		GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
-		return;
-	}
+	// player broke free
+	// clear timer function
+	m_CanMove = true;
+	m_MaxPullTime -= m_TimeLoss;
+
+	UE_LOG(LogTemp, Warning, TEXT("YOU BROKE FREE!"));
+	GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////////
