@@ -71,6 +71,11 @@ bool AFroggoCharacter::GetPlayerAlive()
 	return m_playerAlive;
 }
 
+FTimerHandle AFroggoCharacter::GetPullTimerHandle()
+{
+	return m_PullTimerHandle;
+}
+
 void AFroggoCharacter::PullTimer()
 {
 	if (m_PullLossAmount < 0)

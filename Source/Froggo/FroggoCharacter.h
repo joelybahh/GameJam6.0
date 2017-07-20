@@ -51,6 +51,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		bool GetPlayerAlive();
 
+	UFUNCTION(BlueprintCallable)
+		FTimerHandle GetPullTimerHandle();
+
 	UFUNCTION()
 		void PullTimer();
 
@@ -60,7 +63,8 @@ protected:
 	FTimerHandle m_PullTimerHandle;
 
 	// how much the player is being pulled
-	int32 m_pullForce;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	float m_pullForce;
 
 	// how long the player has to break free
 	UPROPERTY(EditAnywhere)
