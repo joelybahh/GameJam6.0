@@ -53,7 +53,13 @@ void AFroggoCharacter::pullTimerStart()
 {
 	// make sure pull force is how much needed to kill player
 	m_pullForce = m_PullLossAmount;
-	// stop the player from movin	g
+
+	if (m_MaxPullTime <= 0.0)
+	{
+		m_MaxPullTime = 0.05;
+	}
+
+	// stop the player from moving
 	m_CanMove = false;
 
 	FTimerDelegate TimerDel;
