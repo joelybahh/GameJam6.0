@@ -72,7 +72,7 @@ protected:
 
 	// how much the pull decrements each time
 	UPROPERTY(EditAnywhere)
-		int32 m_PullLossDecrement;
+		int32 m_PullLossDecrement = 5;
 
 	bool m_playerAlive;
 
