@@ -71,7 +71,7 @@ protected:
 
 	// how long the player has to break free
 	UPROPERTY(EditAnywhere)
-	int32 m_MaxPullTime;
+	float m_MaxPullTime;
 
 	// the amount of pull needed to kill player
 	UPROPERTY(EditAnywhere)
@@ -79,7 +79,7 @@ protected:
 
 	// how much to decrease time each time the player breaks free
 	UPROPERTY(EditAnywhere)
-		int32 m_TimeLoss;
+		float m_TimeLoss;
 
 	bool m_playerAlive;
 

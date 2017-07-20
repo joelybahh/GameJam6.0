@@ -68,6 +68,7 @@ void AFroggoCharacter::pullTimerEnd()
 {
 	GetWorld()->GetTimerManager().ClearTimer(m_PullTimerHandle);
 	m_CanMove = true;
+	m_MaxPullTime -= m_TimeLoss;
 }
 
 bool AFroggoCharacter::GetPlayerAlive()
